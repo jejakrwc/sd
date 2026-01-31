@@ -1,0 +1,122 @@
+body {
+    background-color: #f8f9fc;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+#headerFixed {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.table-container {
+    margin-top: 10px;
+}
+
+
+.card {
+    border-radius: 10px;
+}
+/* Biar header tabel tetap (sticky) */
+.table-responsive {
+    max-height: 800px; /* tinggi maksimal tabel sebelum muncul scroll */
+    overflow-y: auto;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0; /* menempel di atas container scroll */
+    background-color: #cfe2ff; /* sama dengan warna table-primary */
+    z-index: 10; /* agar berada di atas baris lainnya */
+    text-align: center;
+}
+
+table th {
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+table td {
+    vertical-align: middle;
+}
+
+.aksi button {
+    margin: 2px;
+}
+
+.badge-belum {
+    background-color: #dc3545;
+}
+
+.badge-lunas {
+    background-color: #28a745;
+}
+.stretch-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* TABEL STRETCH & FLEKSIBEL */
+.stretch-table {
+    width: 100%;
+    table-layout: auto; /* biar kolom bisa menyesuaikan isi */
+}
+
+/* Semua sel */
+/* Perkecil jarak antar kolom */
+.stretch-table th,
+.stretch-table td {
+    padding: 0.25rem 0.4rem; /* Atur sesuai kebutuhan */
+}
+
+
+/* ===== KOLOM NO (KECIL) ===== */
+.stretch-table th:first-child,
+.stretch-table td:first-child {
+    width: 40px;
+    max-width: 40px;
+    text-align: center;
+    white-space: nowrap;
+    padding: 4px;
+}
+
+/* ===== KOLOM NAMA SISWA (AUTO) ===== */
+.stretch-table th:nth-child(2),
+.stretch-table td:nth-child(2) {
+    width: auto;              /* fleksibel */
+    min-width: 120px;         /* tidak terlalu kecil */
+    max-width: 280px;         /* tidak kebablasan */
+    white-space: nowrap;
+    text-align: left;
+}
+
+/* Potong rapi jika nama terlalu panjang */
+.stretch-table td:nth-child(2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===== KOLOM BUKU ===== */
+.stretch-table th:nth-child(n+3):nth-child(-n+11),
+.stretch-table td:nth-child(n+3):nth-child(-n+11) {
+    width: 60px;
+    white-space: nowrap;
+}
+
+/* ===== KOLOM ANGKA ===== */
+.stretch-table th:nth-child(12),
+.stretch-table th:nth-child(13),
+.stretch-table th:nth-child(14),
+.stretch-table td:nth-child(12),
+.stretch-table td:nth-child(13),
+.stretch-table td:nth-child(14) {
+    width: 110px;
+    white-space: nowrap;
+}
+
+/* ===== KOLOM AKSI ===== */
+.stretch-table th:last-child,
+.stretch-table td:last-child {
+    width: 140px;
+    white-space: nowrap;
+}
