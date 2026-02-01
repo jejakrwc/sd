@@ -1,122 +1,159 @@
+/* ===== GLOBAL ===== */
 body {
-    background-color: #f8f9fc;
+    background-color: #f4f6f9;
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 14px;
-    color: #333;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
 }
+
 #headerFixed {
     position: sticky;
     top: 0;
     z-index: 999;
-}
-.table-container {
-    margin-top: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 10px 20px;
+    font-weight: bold;
 }
 
-
+/* CARD */
 .card {
-    border-radius: 10px;
+    border-radius: 12px;
+    background-color: #fff;
+    padding: 1rem;
+    margin: 20px auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
-/* Biar header tabel tetap (sticky) */
+
+/* TABEL KONTAINER */
+.table-container {
+    margin-top: 15px;
+    width: 100%;
+}
+
 .table-responsive {
-    max-height: 800px; /* tinggi maksimal tabel sebelum muncul scroll */
+    max-height: 700px;
     overflow-y: auto;
+    border-radius: 10px;
+    border: 1px dashed #dee2e6;
 }
 
-.table thead th {
-    position: sticky;
-    top: 0; /* menempel di atas container scroll */
-    background-color: #cfe2ff; /* sama dengan warna table-primary */
-    z-index: 10; /* agar berada di atas baris lainnya */
-    text-align: center;
-}
-
-table th {
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-table td {
-    vertical-align: middle;
-}
-
-.aksi button {
-    margin: 2px;
-}
-
-.badge-belum {
-    background-color: #dc3545;
-}
-
-.badge-lunas {
-    background-color: #28a745;
-}
-.stretch-table {
-    table-layout: fixed;
-    width: 100%;
-}
-
-/* TABEL STRETCH & FLEKSIBEL */
+/* ===== TABEL ===== */
 .stretch-table {
     width: 100%;
-    table-layout: auto; /* biar kolom bisa menyesuaikan isi */
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: auto;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-/* Semua sel */
-/* Perkecil jarak antar kolom */
 .stretch-table th,
 .stretch-table td {
-    padding: 0.25rem 0.4rem; /* Atur sesuai kebutuhan */
+    padding: 0.5rem 0.75rem;
+    vertical-align: middle;
+    font-size: 13px;
+    border-bottom: 1px solid #e2e8f0;
 }
 
+/* HEADER TABEL STICKY */
+.stretch-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #1d4ed8; /* biru modern */
+    color: #fff;
+    z-index: 10;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+}
 
-/* ===== KOLOM NO (KECIL) ===== */
+/* ALTERNATING ROWS */
+.stretch-table tbody tr:nth-child(odd) {
+    background-color: #f9fafb;
+}
+
+/* HOVER EFFECT */
+.stretch-table tbody tr:hover {
+    background-color: #e0f2fe;
+    transition: background-color 0.2s;
+}
+
+/* KOLOM NO */
 .stretch-table th:first-child,
 .stretch-table td:first-child {
-    width: 40px;
-    max-width: 40px;
+    width: 50px;
     text-align: center;
-    white-space: nowrap;
-    padding: 4px;
+    font-weight: 500;
 }
 
-/* ===== KOLOM NAMA SISWA (AUTO) ===== */
+/* KOLOM NAMA SISWA */
 .stretch-table th:nth-child(2),
 .stretch-table td:nth-child(2) {
-    width: auto;              /* fleksibel */
-    min-width: 120px;         /* tidak terlalu kecil */
-    max-width: 280px;         /* tidak kebablasan */
-    white-space: nowrap;
+    width: auto;
+    min-width: 150px;
+    max-width: 300px;
     text-align: left;
-}
-
-/* Potong rapi jika nama terlalu panjang */
-.stretch-table td:nth-child(2) {
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 500;
 }
 
-/* ===== KOLOM BUKU ===== */
+/* KOLOM BUKU (3-11) */
 .stretch-table th:nth-child(n+3):nth-child(-n+11),
 .stretch-table td:nth-child(n+3):nth-child(-n+11) {
     width: 60px;
-    white-space: nowrap;
+    text-align: center;
 }
 
-/* ===== KOLOM ANGKA ===== */
-.stretch-table th:nth-child(12),
-.stretch-table th:nth-child(13),
-.stretch-table th:nth-child(14),
-.stretch-table td:nth-child(12),
-.stretch-table td:nth-child(13),
-.stretch-table td:nth-child(14) {
-    width: 110px;
-    white-space: nowrap;
+/* KOLOM ANGKA / PEMBAYARAN (12-14) */
+.stretch-table th:nth-child(n+12):nth-child(-n+14),
+.stretch-table td:nth-child(n+12):nth-child(-n+14) {
+    width: 100px;
+    text-align: right;
 }
 
-/* ===== KOLOM AKSI ===== */
+/* KOLOM AKSI */
 .stretch-table th:last-child,
 .stretch-table td:last-child {
     width: 140px;
-    white-space: nowrap;
+    text-align: center;
+}
+
+/* BUTTON AKSI */
+.aksi button {
+    margin: 2px;
+    border: none;
+    background-color: #1d4ed8;
+    color: #fff;
+    border-radius: 5px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.aksi button:hover {
+    background-color: #2563eb;
+}
+
+/* BADGES */
+.badge-belum {
+    background-color: #ef4444;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.badge-lunas {
+    background-color: #10b981;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 12px;
 }
