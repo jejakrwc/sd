@@ -448,6 +448,42 @@ function updateSaldoSekarang() {
     document.getElementById("btnUpdateSaldoNominal").textContent = `Rp ${totalBayar.toLocaleString("id-ID")}`;
 }
 
+/* =========================
+   SHORTCUT KEY
+========================= */
+document.addEventListener("keydown", function(e) {
+    // Pastikan tidak sedang mengetik di input / textarea
+    const aktifTag = document.activeElement.tagName.toLowerCase();
+    if (aktifTag === "input" || aktifTag === "textarea") return;
+
+    switch (e.key) {
+        case "F1":
+            e.preventDefault(); // cegah default help browser
+            openTambahModal();
+            break;
+        case "F2":
+            e.preventDefault();
+            resetBayar();
+            // Tampilkan toast singkat untuk konfirmasi reset
+            const toastReset = document.getElementById("tambahToastBody");
+            toastReset.innerHTML = `<i class="fa-solid fa-circle-check me-2"></i> Semua pembayaran siswa berhasil di-reset.`;
+            new bootstrap.Toast(document.getElementById("tambahToast"), { delay: 2000 }).show();
+            break;
+        case "F3":
+            e.preventDefault();
+            exportPDF();
+            // opsional: toast singkat konfirmasi export
+            const toastPDF = document.getElementById("tambahToastBody");
+            toastPDF.innerHTML = `<i class="fa-solid fa-circle-check me-2"></i> Data berhasil diexport ke PDF.`;
+            new bootstrap.Toast(document.getElementById("tambahToast"), { delay: 2000 }).show();
+            break;
+        case "F4":
+            e.preventDefault();
+            openHapusSemuaModal();
+            break;
+    }
+});
+
 
 /* =========================
    INIT
