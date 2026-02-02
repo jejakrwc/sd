@@ -19,23 +19,60 @@
 
  <!-- Tombol kiri dengan ikon baru -->
 <div class="col-md-8 col-12 d-flex flex-wrap gap-2 align-items-center mb-2">
-    <button type="button" class="btn btn-primary flex-grow-1 flex-md-grow-0" onclick="openTambahModal()">
-        <i class="fa-solid fa-user-plus me-1"></i> Tambah Siswa
-    </button>
-    <button type="button" class="btn btn-success flex-grow-1 flex-md-grow-0" onclick="importData()">
-        <i class="fa-solid fa-upload me-1"></i> Import
-    </button>
-    <button type="button" class="btn btn-outline-secondary flex-grow-1 flex-md-grow-0" onclick="exportData()">
-        <i class="fa-solid fa-download me-1"></i> Export
-    </button>
-    <button type="button" class="btn btn-danger flex-grow-1 flex-md-grow-0" onclick="openHapusSemuaModal()">
-        <i class="fa-solid fa-trash-can me-1"></i> Hapus Semua Data
-    </button>
-    <button type="button" class="btn btn-warning flex-grow-1 flex-md-grow-0" onclick="resetBayar()">
-        <i class="fa-solid fa-arrow-rotate-left me-1"></i> Reset Bayar
-    </button>
-    <button type="button" class="btn btn-secondary flex-grow-1 flex-md-grow-0" onclick="exportPDF()">
-    <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
+<button type="button" class="btn btn-primary"
+    onclick="openTambahModal()"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    data-bs-title="Tambah Siswa">
+    <i class="fa-solid fa-user-plus"></i>
+</button>
+
+<button type="button" class="btn btn-success"
+    onclick="importData()"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    data-bs-title="Import Data">
+    <i class="fa-solid fa-file-import"></i>
+</button>
+
+<button type="button" class="btn btn-outline-secondary"
+    onclick="exportData()"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    data-bs-title="Export Data">
+    <i class="fa-solid fa-file-export"></i>
+</button>
+
+<button type="button" class="btn btn-danger"
+    onclick="openHapusSemuaModal()"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    data-bs-title="Hapus Semua Data">
+    <i class="fa-solid fa-trash"></i>
+</button>
+
+<button type="button" class="btn btn-warning"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    data-bs-title="Reset Bayar"
+    onclick="openResetBayarModal()">
+    <i class="fa-solid fa-rotate-left"></i>
+</button>
+
+
+<button type="button" class="btn btn-secondary"
+    onclick="exportPDF()"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    data-bs-title="Export PDF">
+    <i class="fa-solid fa-file-pdf"></i>
+</button>
+    <button type="button" class="btn btn-dark"
+    data-bs-toggle="tooltip"
+    data-bs-placement="bottom"
+    data-bs-title="Info & Cara Pakai"
+    onclick="openInfoModal()">
+    <i class="fa-solid fa-circle-info"></i>
 </button>
     <button id="btnUpdateSaldo" class="btn btn-info d-flex align-items-center gap-2 flex-grow-1 flex-md-grow-0">
         <i class="fa-solid fa-coins"></i>
@@ -43,6 +80,7 @@
         <span id="btnUpdateSaldoSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
         <span id="btnUpdateSaldoNominal" class="ms-2 fw-bold"></span>
     </button>
+
 </div>
 
 
@@ -82,8 +120,8 @@
                             <th>MTK</th>
                             <th>SENI</th>
                             <th>IPAS</th>
-                            <th>BUKU G</th>
-                            <th>BUKU H</th>
+                            <th>PKN</th>
+                            <th>KKMB</th>
                             <th>BUKU I</th>
                             <th>TOTAL</th>
                             <th>DIBAYAR</th>
@@ -100,20 +138,6 @@
             </div>
         </div>
     </div>
-<!-- Keterangan Shortcut -->
-<div class="alert alert-info py-2 mt-2 mb-0 d-flex flex-wrap align-items-center" style="font-size: 0.9rem; gap: 1rem;">
-    <i class="fa-solid fa-keyboard me-1"></i> 
-    <strong>Shortcut:</strong>
-    <div class="d-flex flex-wrap gap-2">
-        <span><kbd>F1</kbd> = Tambah Siswa</span>
-        <span><kbd>F2</kbd> = Reset Bayar</span>
-        <span><kbd>F3</kbd> = Export PDF</span>
-        <span><kbd>F4</kbd> = Hapus Semua</span>
-    </div>
-</div>
-
-</div>
-
 <!-- MODAL TAMBAH / EDIT -->
 <div class="modal fade" id="tambahModal" tabindex="-1">
   <div class="modal-dialog">
@@ -203,6 +227,99 @@
       </div>
     </div>
   </div>
+</div>
+<div class="modal fade" id="resetBayarModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title">
+          <i class="fa-solid fa-rotate-left me-2"></i>
+          Konfirmasi Reset Bayar
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="mb-2">
+          Anda yakin ingin <b>mereset semua data pembayaran</b>?
+        </p>
+        <ul class="small text-muted mb-0">
+          <li>Status pembayaran akan dikosongkan</li>
+          <li>Jumlah dibayar akan direset ke 0</li>
+          <li>Data siswa <b>tidak dihapus</b></li>
+        </ul>
+
+        <div class="alert alert-danger small mt-3 mb-0">
+          <i class="fa-solid fa-triangle-exclamation me-1"></i>
+          Tindakan ini <b>tidak dapat dibatalkan</b>.
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Batal
+        </button>
+        <button class="btn btn-warning fw-bold" id="confirmResetBayarBtn">
+          <i class="fa-solid fa-rotate-left me-1"></i>
+          Ya, Reset
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    Informasi & Tata Cara Penggunaan
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <h6 class="fw-bold">📌 Fungsi Tombol</h6>
+                <ul class="small">
+                    <li><i class="fa-solid fa-user-plus me-1"></i> Tambah data siswa</li>
+                    <li><i class="fa-solid fa-file-import me-1"></i> Import data dari file</li>
+                    <li><i class="fa-solid fa-file-export me-1"></i> Export data</li>
+                    <li><i class="fa-solid fa-trash me-1 text-danger"></i> Hapus semua data</li>
+                    <li><i class="fa-solid fa-rotate-left me-1 text-warning"></i> Reset status pembayaran</li>
+                    <li><i class="fa-solid fa-file-pdf me-1 text-danger"></i> Export laporan PDF</li>
+                </ul>
+
+                <hr>
+
+                <h6 class="fw-bold">🧭 Tata Cara Pakai</h6>
+                <ol class="small">
+                    <li>Gunakan tombol <b>Tambah</b> untuk input data baru</li>
+                    <li>Import digunakan untuk memasukkan data banyak sekaligus</li>
+                    <li>Pastikan data sudah benar sebelum export / hapus</li>
+                    <li>Reset bayar hanya digunakan jika terjadi kesalahan input</li>
+                    <li>WAJIB EXPORT!!! setelah menginput atau perbarui data</li>
+                    <li>Data otomatis tersimpan tanpa perlu klik simpan</li>
+                    <li>Input jumlah pembayaran di DIBAYAR</li>
+                </ol>
+
+                <div class="alert alert-warning small mt-3 mb-0">
+                    <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                    <b>Perhatian:</b> Menghapus data bersifat permanen.
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Tutup
+                </button>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
