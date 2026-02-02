@@ -138,12 +138,19 @@
             </div>
         </div>
     </div>
-<!-- MODAL TAMBAH / EDIT -->
+<!-- MODAL TAMBAH -->
 <div class="modal fade" id="tambahModal" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">Tambah Siswa</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-      <div class="modal-body"><input type="text" id="tambahNamaInput" class="form-control" placeholder="Nama siswa"></div>
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fa-solid fa-user-plus"></i> Tambah Siswa
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="tambahNamaInput" class="form-control" placeholder="Nama siswa">
+      </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
         <button class="btn btn-primary" onclick="simpanSiswa()">Simpan</button>
@@ -152,11 +159,17 @@
   </div>
 </div>
 
+<!-- MODAL EDIT -->
 <div class="modal fade" id="editModal" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">Edit Nama Siswa</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-      <div class="modal-body"><input type="text" id="editNamaInput" class="form-control" placeholder="Masukkan nama siswa"></div>
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Nama Siswa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="editNamaInput" class="form-control" placeholder="Masukkan nama siswa">
+      </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
         <button class="btn btn-primary" onclick="simpanNama()">Simpan</button>
@@ -164,6 +177,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- MODAL KONFIRMASI HAPUS -->
 <div class="modal fade" id="hapusModal" tabindex="-1">
