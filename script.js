@@ -1,3 +1,4 @@
+const API_URL = "https://script.google.com/macros/s/AKfycbws3i4M6czZDSYiq2xvxEKYZnLPO2FiqpTFoahw2NNZ7heuWrQcJLZt7MACZ8UVS3PxKw/exec";
 const HARGA_BUKU = 13500;
 let rowEdit = null;
 let rowToDelete = null;
@@ -48,7 +49,7 @@ function hitung(row) {
     row.querySelector(".total").value = total.toLocaleString("id-ID");
 
     // Simpan ke localStorage
-    simpanKeLocal();
+    simpanKeServer();
 
     // Update total saldo dibayar
     updateSaldoSekarang();
@@ -59,8 +60,9 @@ function hitung(row) {
 /* =========================
    LOCAL STORAGE
 ========================= */
-function simpanKeLocal() {
+function simpanKeServer() {
     let data = [];
+
     document.querySelectorAll("#data tr").forEach(row => {
         data.push({
             nama: row.querySelector(".nama-siswa").innerText,
@@ -71,39 +73,57 @@ function simpanKeLocal() {
             status: row.querySelector(".status").textContent
         });
     });
-    localStorage.setItem("dataSiswa", JSON.stringify(data));
+
+    fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            action: "save",
+            data: data
+        })
+    }).catch(err => console.error("Gagal simpan:", err));
 }
 
-function loadDariLocal() {
-    const data = JSON.parse(localStorage.getItem("dataSiswa")) || [];
-    const tbody = document.getElementById("data");
-    tbody.innerHTML = "";
-    data.forEach((item, i) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${i+1}</td>
-            <td><span class="nama-siswa">${item.nama}</span></td>
-            ${item.buku.map(b => `<td><input type="checkbox" class="buku" ${b ? "checked" : ""}></td>`).join('')}
-            <td><input type="text" class="form-control total" value="${item.total}" readonly></td>
-            <td><input type="number" class="form-control bayar" value="${item.dibayar}"></td>
-            <td><input type="text" class="form-control sisa" value="${item.sisa}" readonly></td>
-            <td><span class="badge status ${item.status === "LUNAS" ? "badge-lunas" : "badge-belum"}">${item.status}</span></td>
-            <td class="aksi">
-                <button class="btn btn-warning btn-sm" onclick="openEditModal(this)">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                <button class="btn btn-danger btn-sm" onclick="hapusRow(this)">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-                <button class="btn btn-success btn-sm" onclick="kirimWA(this)">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </button>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
-    updateNomor();
+
+function loadDariServer() {
+    fetch(API_URL + "?action=get")
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById("data");
+            tbody.innerHTML = "";
+
+            data.forEach((item, i) => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${i + 1}</td>
+                    <td><span class="nama-siswa">${item.nama}</span></td>
+                    ${item.buku.map(b => `<td><input type="checkbox" class="buku" ${b ? "checked" : ""}></td>`).join("")}
+                    <td><input type="text" class="form-control total" value="${item.total}" readonly></td>
+                    <td><input type="number" class="form-control bayar" value="${item.dibayar}"></td>
+                    <td><input type="text" class="form-control sisa" value="${item.sisa}" readonly></td>
+                    <td><span class="badge status ${item.status === "LUNAS" ? "badge-lunas" : "badge-belum"}">${item.status}</span></td>
+                    <td class="aksi">
+                        <button class="btn btn-warning btn-sm" onclick="openEditModal(this)">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusRow(this)">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                        <button class="btn btn-success btn-sm" onclick="kirimWA(this)">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+                hitung(row);
+            });
+
+            updateNomor();
+            updateSaldoSekarang();
+        })
+        .catch(err => console.error("Gagal load:", err));
 }
+
 
 /* =========================
    TAMBAH SISWA
@@ -136,7 +156,7 @@ function simpanSiswa() {
     `;
     tbody.appendChild(row);
     updateNomor();
-    simpanKeLocal();
+    simpanKeServer();
 
     bootstrap.Modal.getInstance(document.getElementById("tambahModal")).hide();
     const toastBody = document.getElementById("tambahToastBody");
@@ -157,7 +177,7 @@ document.getElementById("confirmHapusBtn").addEventListener("click", () => {
         rowToDelete = null;
         bootstrap.Modal.getInstance(document.getElementById("hapusModal")).hide();
         new bootstrap.Toast(document.getElementById("hapusToast"), { delay: 3000 }).show();
-        simpanKeLocal();
+        simpanKeServer();
         updateNomor();
     }
 });
@@ -305,7 +325,7 @@ function importData() {
                 });
 
                 updateNomor();
-                simpanKeLocal();
+                simpanKeServer();
 
                 // Toast konfirmasi
                 const toastBody = document.getElementById("tambahToastBody");
@@ -436,7 +456,7 @@ function simpanNama() {
     toastBody.innerHTML = `<i class="fa-solid fa-circle-check me-2"></i> Data siswa <strong>${newName}</strong> berhasil diperbarui.`;
     new bootstrap.Toast(document.getElementById("editToast"), { delay: 3000 }).show();
     rowEdit = null;
-    simpanKeLocal();
+    simpanKeServer();
 }
 
 /* =========================
@@ -497,4 +517,4 @@ function openInfoModal() {
 /* =========================
    INIT
 ========================= */
-loadDariLocal();
+loadDariServer();
