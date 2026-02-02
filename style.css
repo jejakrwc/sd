@@ -15,29 +15,29 @@ body {
 }
 /* Paksa warna teks header modal */
 .modal-header {
-  color: #212529;
+  color: #ffffff;
 }
 
 /* Khusus header bg-warning */
 .modal-header.bg-warning {
   background-color: #ffc107 !important;
-  color: #ffffff !important;
+  color: #fdfdfd !important;
 }
 
 /* Judul modal */
 .modal-header.bg-warning .modal-title {
-  color: #f1f3f5 !important;
+  color: #fcfcfc !important;
   font-weight: 700;
 }
 
 /* Ikon di judul */
 .modal-header.bg-warning .modal-title i {
-  color: #ffffff !important;
+  color: #fafafa !important;
 }
 
 /* Border bawah */
 .modal-header.bg-warning {
-  border-bottom: 1px solid rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(253, 253, 253, 0.25);
 }
 
 #headerFixed {
